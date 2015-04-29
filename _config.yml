@@ -7,7 +7,7 @@ baseurl:     ""
 url:         "http://joshua.si"
 
 # Google analytics
-google_analytics:
+google_analytics: UA-35360701-1
 
 # Optional features
 animated:           false
