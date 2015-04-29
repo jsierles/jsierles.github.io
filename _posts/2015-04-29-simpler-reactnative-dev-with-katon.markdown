@@ -49,15 +49,7 @@ $ katon tail myapp
 
 ### Access from a device
 
-To access these domains from another device, katon supports [xip.io][xip.io] URLs using your local IP address and app name.
-
-So let's automate this in our XCode project by:
-
-* Adding the katon command using our project name
-* Discovering our IP address
-* Modifying our source code to send devices (and the simulator) to the correct domain
-
-To do this, follow these steps, outlined in the video:
+To access these domains from another device, katon supports [xip.io][xip.io] URLs using your local IP address and app name. So let's automate this in our XCode project, both for devices and the simulator.
 
 #### Remove the default React packager script
 
