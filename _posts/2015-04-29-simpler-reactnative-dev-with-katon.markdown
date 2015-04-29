@@ -4,35 +4,39 @@ title:  "Simplify React Native development with katon"
 date:   2015-04-29 10:59:37
 categories: reactnative
 ---
-**In this post, we'll learn how to use [katon][katon] to automate the web packager for multiple React Native applcations.**
+**Learn how to automate the React Native web packager for developing multiple React Native applications on from simulators and devices.**
 
-For Ruby web development I use the excellent [pow][pow] for launching my Rails apps painlessly. In short, it uses fake local domains to route HTTP requests to your application. But it's Ruby-only.
+For Ruby web development, we have [pow][pow], for working on mulitple apps painlessly. In short, it employs fake local domains to route HTTP requests to your application. But it's Ruby-only.
 
-Enter [katon][katon], inspired by Pow. By passing a random port to any command you specify, katon runs service on the local .ka domain.
+Enter [katon][katon], inspired by Pow. By passing a random port to any command you specify, katon runs service on the local .ka domain, and supports loading from other devices on the network.
 
-So this is perfect for React Native development!
+So, it's perfect for React Native development!
 
 ### Use katon for React Native projects
 
-First, install katon.
+This is a simplest way to try this method. See below for a fully automated solution.
+
+#### Install katon
 
 ```
 $ npm install -g katon
 ```
 
-In your project directory, add your project to katon.
+#### In your project directory, add your project to katon
 
 ```
 $ katon add 'node_modules/react-native/packager/packager.sh --port $PORT' myapp
 ```
 
-Finally, change the application URL in AppDelegate.m to the katon URL.
+#### Change the application URL in AppDelegate.m to the katon URL
 
 {% highlight objective-c%}
 jsCodeLocation = [NSURL URLWithString:@"http://myapp.ka/index.ios.bundle"];
 {% endhighlight %}
 
-Now build your project and run your app in the iOS simulator. Katon will automatically start up your packager.
+#### Build your project and run your app in the iOS simulator
+
+Katon will automatically start up your packager.
 
 If you need to restart the packager, just kill it.
 
@@ -40,7 +44,7 @@ If you need to restart the packager, just kill it.
 $ katon kill myapp
 ```
 
-Tail the packager logs to track down problems.
+See the packager logs to track down problems.
 
 ```
 $ katon tail myapp
@@ -49,7 +53,9 @@ $ katon tail myapp
 
 ### Access from a device
 
-To access these domains from another device, katon supports [xip.io][xip.io] URLs using your local IP address and app name. So let's automate this in our XCode project, both for devices and the simulator.
+To access these domains from another device, katon supports [xip.io][xip.io] URLs using your local IP address and app name. For example, ```myapp.192.168.0.10.xip.io``` resolves to 192.168.0.10.
+
+Let's automate generating this URL in our XCode project, both for devices and the simulator.
 
 #### Remove the default React packager script
 

@@ -8,47 +8,43 @@
     
       <item>
         <title>Simplify React Native development with katon</title>
-        <description>&lt;p&gt;&lt;strong&gt;In this post, we&amp;rsquo;ll learn how to use &lt;a href=&quot;https://github.com/typicode/katon&quot;&gt;katon&lt;/a&gt; to automate the web packager for multiple React Native applcations.&lt;/strong&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;strong&gt;Learn how to automate the React Native web packager for developing multiple React Native applications on from simulators and devices.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;For Ruby web development I use the excellent &lt;a href=&quot;http://pow.cx&quot;&gt;pow&lt;/a&gt; for launching my Rails apps painlessly. In short, it uses fake local domains to route HTTP requests to your application. But it&amp;rsquo;s Ruby-only.&lt;/p&gt;
+&lt;p&gt;For Ruby web development, we have &lt;a href=&quot;http://pow.cx&quot;&gt;pow&lt;/a&gt;, for working on mulitple apps painlessly. In short, it employs fake local domains to route HTTP requests to your application. But it&amp;rsquo;s Ruby-only.&lt;/p&gt;
 
-&lt;p&gt;Enter &lt;a href=&quot;https://github.com/typicode/katon&quot;&gt;katon&lt;/a&gt;, inspired by Pow. By passing a random port to any command you specify, katon runs service on the local .ka domain.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a href=&quot;https://github.com/typicode/katon&quot;&gt;katon&lt;/a&gt;, inspired by Pow. By passing a random port to any command you specify, katon runs service on the local .ka domain, and supports loading from other devices on the network.&lt;/p&gt;
 
-&lt;p&gt;So this is perfect for React Native development!&lt;/p&gt;
+&lt;p&gt;So, it&amp;rsquo;s perfect for React Native development!&lt;/p&gt;
 
 &lt;h3 id=&quot;use-katon-for-react-native-projects&quot;&gt;Use katon for React Native projects&lt;/h3&gt;
 
-&lt;p&gt;First, install katon.&lt;/p&gt;
+&lt;p&gt;This is a simplest way to try this method. See below for a fully automated solution.&lt;/p&gt;
+
+&lt;h4 id=&quot;install-katon&quot;&gt;Install katon&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ npm install -g katon
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;In your project directory, add your project to katon.&lt;/p&gt;
+&lt;h4 id=&quot;in-your-project-directory,-add-your-project-to-katon&quot;&gt;In your project directory, add your project to katon&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon add &amp;#39;node_modules/react-native/packager/packager.sh --port $PORT&amp;#39; myapp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Finally, change the application URL in AppDelegate.m to the katon URL.&lt;/p&gt;
+&lt;h4 id=&quot;change-the-application-url-in-appdelegate.m-to-the-katon-url&quot;&gt;Change the application URL in AppDelegate.m to the katon URL&lt;/h4&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objective-c&quot; data-lang=&quot;objective-c&quot;&gt;&lt;span class=&quot;n&quot;&gt;jsCodeLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;URLWithString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;http://myapp.ka/index.ios.bundle&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now build your project and run your app in the iOS simulator. Katon will automatically start up your packager.&lt;/p&gt;
+&lt;h4 id=&quot;build-your-project-and-run-your-app-in-the-ios-simulator&quot;&gt;Build your project and run your app in the iOS simulator&lt;/h4&gt;
+
+&lt;p&gt;Katon will automatically start up your packager.&lt;/p&gt;
 
 &lt;p&gt;If you need to restart the packager, just kill it.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon kill myapp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Tail the packager logs to track down problems.&lt;/p&gt;
+&lt;p&gt;See the packager logs to track down problems.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon tail myapp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;access-from-a-device&quot;&gt;Access from a device&lt;/h3&gt;
 
-&lt;p&gt;To access these domains from another device, katon supports &lt;a href=&quot;http:/xip.io&quot;&gt;xip.io&lt;/a&gt; URLs using your local IP address and app name.&lt;/p&gt;
+&lt;p&gt;To access these domains from another device, katon supports &lt;a href=&quot;http:/xip.io&quot;&gt;xip.io&lt;/a&gt; URLs using your local IP address and app name. For example, &lt;code&gt;myapp.192.168.0.10.xip.io&lt;/code&gt; resolves to 192.168.0.10.&lt;/p&gt;
 
-&lt;p&gt;So let&amp;rsquo;s automate this in our XCode project by:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Adding the katon command using our project name&lt;/li&gt;
-&lt;li&gt;Discovering our IP address&lt;/li&gt;
-&lt;li&gt;Modifying our source code to send devices (and the simulator) to the correct domain&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To do this, follow these steps, outlined in the video:&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s automate generating this URL in our XCode project, both for devices and the simulator.&lt;/p&gt;
 
 &lt;h4 id=&quot;remove-the-default-react-packager-script&quot;&gt;Remove the default React packager script&lt;/h4&gt;
 
