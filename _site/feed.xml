@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Joshua Sierles</title>
+    <description>Joshua Sierles&#39; personal site. Posts about Ruby, Rails, React Native, flamenco and Spain.</description>
+    <link>http://joshua.si/</link>
+    <atom:link href="http://joshua.si/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Simplify React Native development with katon</title>
+        <description>&lt;p&gt;&lt;strong&gt;In this post, we&amp;rsquo;ll learn how to use &lt;a href=&quot;https://github.com/typicode/katon&quot;&gt;katon&lt;/a&gt; to automate the web packager for multiple React Native applcations.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For Ruby web development I use the excellent &lt;a href=&quot;http://pow.cx&quot;&gt;pow&lt;/a&gt; for launching my Rails apps painlessly. In short, it uses fake local domains to route HTTP requests to your application. But it&amp;rsquo;s Ruby-only.&lt;/p&gt;
+
+&lt;p&gt;Enter &lt;a href=&quot;https://github.com/typicode/katon&quot;&gt;katon&lt;/a&gt;, inspired by Pow. By passing a random port to any command you specify, katon runs service on the local .ka domain.&lt;/p&gt;
+
+&lt;p&gt;So this is perfect for React Native development!&lt;/p&gt;
+
+&lt;h3 id=&quot;use-katon-for-react-native-projects&quot;&gt;Use katon for React Native projects&lt;/h3&gt;
+
+&lt;p&gt;First, install katon.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ npm install -g katon
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In your project directory, add your project to katon.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon add &amp;#39;node_modules/react-native/packager/packager.sh --port $PORT&amp;#39; myapp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, change the application URL in AppDelegate.m to the katon URL.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objective-c&quot; data-lang=&quot;objective-c&quot;&gt;&lt;span class=&quot;n&quot;&gt;jsCodeLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;URLWithString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;http://myapp.ka/index.ios.bundle&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now build your project and run your app in the iOS simulator. Katon will automatically start up your packager.&lt;/p&gt;
+
+&lt;p&gt;If you need to restart the packager, just kill it.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon kill myapp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Tail the packager logs to track down problems.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ katon tail myapp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;access-from-a-device&quot;&gt;Access from a device&lt;/h3&gt;
+
+&lt;p&gt;To access these domains from another device, katon supports &lt;a href=&quot;http:/xip.io&quot;&gt;xip.io&lt;/a&gt; URLs using your local IP address and app name.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s automate this in our XCode project by:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Adding the katon command using our project name&lt;/li&gt;
+&lt;li&gt;Discovering our IP address&lt;/li&gt;
+&lt;li&gt;Modifying our source code to send devices (and the simulator) to the correct domain&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To do this, follow these steps, outlined in the video:&lt;/p&gt;
+
+&lt;h4 id=&quot;remove-the-default-react-packager-script&quot;&gt;Remove the default React packager script&lt;/h4&gt;
+
+&lt;p&gt;In your XCode project, click on &lt;em&gt;Libraries -&amp;gt; React&lt;/em&gt;. In the main window, under &lt;em&gt;Build Phases&lt;/em&gt;, remove the entry named &lt;em&gt;Run Script&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;add-our-new-build-script&quot;&gt;Add our new build script&lt;/h4&gt;
+
+&lt;p&gt;In our main project, under &lt;em&gt;Build Phases&lt;/em&gt;, add a new entry of &lt;em&gt;Run Script&lt;/em&gt; type.&lt;/p&gt;
+
+&lt;p&gt;Use &lt;em&gt;bin/bash -l&lt;/em&gt; as the shell, in case we&amp;rsquo;re using nvm to manage nodejs, then paste this code:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;APP_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PROJECT_NAME&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; tr &lt;span class=&quot;s1&quot;&gt;&amp;#39;[:upper:]&amp;#39;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;[:lower:]&amp;#39;&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+katon add &lt;span class=&quot;s1&quot;&gt;&amp;#39;node_modules/react-native/packager/packager.sh --port $PORT&amp;#39;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$APP_NAME&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;JS_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://${APP_NAME}.`ipconfig getifaddr en0`.xip.io&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#define JSURL @\&amp;quot;$JS_URL/index.ios.bundle\&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SRCROOT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/iOS/JSUrl.h
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This creates a source file named JSUrl.h, containing a macro with our IP-based URL. If you don&amp;rsquo;t see your IP, check if you can retrieve it using this command: &lt;code&gt;ipconfig getifaddr en1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, update your AppDelegate.m to use the newly defined macro.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objective-c&quot; data-lang=&quot;objective-c&quot;&gt;&lt;span class=&quot;n&quot;&gt;jsCodeLocation&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSURL&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;URLWithString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;JSURL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Build and run your project - you should be up and running!&lt;/p&gt;
+
+&lt;h3 id=&quot;possible-issues&quot;&gt;Possible issues&lt;/h3&gt;
+
+&lt;p&gt;If you already use Pow, xip.io URLs may conflict with it. Since you can use katon for Ruby apps as well, I&amp;rsquo;d recommend replacing pow with katon.&lt;/p&gt;
+
+&lt;p&gt;Happy coding!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 29 Apr 2015 12:59:37 +0200</pubDate>
+        <link>http://joshua.si/reactnative/2015/04/29/simpler-reactnative-dev-with-katon/</link>
+        <guid isPermaLink="true">http://joshua.si/reactnative/2015/04/29/simpler-reactnative-dev-with-katon/</guid>
+      </item>
+    
+  </channel>
+</rss>
