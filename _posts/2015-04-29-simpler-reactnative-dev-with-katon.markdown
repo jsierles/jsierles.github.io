@@ -4,7 +4,7 @@ title:  "Simplify React Native development with katon"
 date:   2015-04-29 10:59:37
 categories: reactnative
 ---
-**Learn how to automate the React Native web packager for developing multiple React Native applications on from simulators and devices.**
+**Setup your React Native projects to run their packagers without port conflicts, for the simulator and devices, without having to change code when your IP address changes.**
 
 For Ruby web development, we have [pow][pow], for working on mulitple apps painlessly. In short, it employs fake local domains to route HTTP requests to your application. But it's Ruby-only.
 
