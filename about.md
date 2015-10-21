@@ -1,17 +1,11 @@
 ---
 layout: page
-title: About Joshua
+title: About
 permalink: /about/
 ---
 
-I live in Sevilla, Spain, where I play flamenco guitar and eat lots of cured ham.
+This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
 
-My wife, [Nicté][nicte], is a talented flamenco dancer.
+You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
 
-I work with Ruby, Rails, Chef and Docker at Rubytune.
-
-Lately, I'm having fun learning mobile development with [React Native](https://facebook.github.io/react-native) and [Rubymotion](http:/rubymotion.com).
-
-![desk](/images/us.jpg)
-
-[nicte]: http://nictemendoza.com
+You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)

@@ -1,24 +1,34 @@
 ---
 layout: default
 ---
-
 <div class="home">
+  <div class="heading">
+    <h1>Joshua Sierles</h1>
+    <p>Hey! I'm a tech generalist and flamenco guitarist living in Seville, Spain.</p>
 
-  <div class="posts">
-    {% for post in paginator.posts %}
-      <div class="post">
-        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
-        <a href="{{ post.url | prepend: site.baseurl }}" class="post-link"><h3 class="h2 post-title">{{ post.title }}</h3></a>
-        <p class="post-summary">
-          {% if post.summary %}
-            {{ post.summary }}
-          {% else %}
-            {{ post.excerpt }}
-          {% endif %}
-        </p>
-      </div>
-    {% endfor %}
+    <div class="find">
+      <a href="https://twitter.com/jsierles">Twitter</a>
+      <a href="https://github.com/jsierles">Github</a>
+      <a href="mailto:joshua@diluvia.net">joshua@diluvia.net</a>
+    </div>
   </div>
+  <div class="photo"><img src="joshua-sierles.png" /></div>
+  <div class="projects">
+    <h2>Some projects I work on</h2>
 
-  {% include pagination.html %}
+    <h3><a href="https://rnplay.org">React Native Playground</a></h3>
+
+    <p>Experiment with React Native apps by building, sharing and testing right in your browser.</p>
+
+    <h3><a href="https://tomaflamenco.com">Tomaflamenco</a></h3>
+    <p>Free online flamenco classes from artists in Seville.</p>
+
+    <h3><a href="https://reploy.io">Reploy</a></h3>
+    <p>Fast React Native app interation: easy sharing and contextual feedback.</p>
+
+    <h3><a href="http://noodler-app.com">Noodler</a></h3>
+    <p>The Noodle Soup Oracle.</p>
+
+
+  </div>
 </div>
