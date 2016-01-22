@@ -2,16 +2,18 @@ html, body {
   margin: 0;
 }
 
-a {
+.personal a {
   text-decoration: none;
-  color: blue;
+  color: #ddd;
 }
 
-a:hover {
+.personal a:hover {
   text-decoration: underline;
+  color: #ddd;
 }
 
 .home {
+
   margin: 0;
   max-width: 2000px;
   font-family: "chaparral-pro-caption", sans-serif;
@@ -22,9 +24,10 @@ a:hover {
 }
 
 .personal {
+  color: #eee;
   width: 200px;
   padding: 5%;
-  background-color: #eee;
+  background-color: #16a085;
 }
 
 .photo {
@@ -39,7 +42,7 @@ img {
 
 .personal p {
   font-weight: normal;
-  color: #333;
+  color: #eee;
   font-size: 100% !important;
   line-height: 1.5em !important;
 }
@@ -55,6 +58,7 @@ img {
 
 .project {
   min-height: 200px;
+  margin-bottom: 30px;
   background-color: #eee;
   width: 45%;
   display: flex;
@@ -68,22 +72,34 @@ img {
   cursor: pointer;
 }
 
-h3 a {
-  color: #fff;
-}
-
 .project p {
   font-size: 90%;
   width: 80%;
   color: #222;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 30px;
   line-height: 1.5em;
 }
 
 .project h3 {
-  background-color: #999;
-  width: 100%;
+  background-color: #16a085;
   color: #fff;
   padding: 10px;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.project > a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.project p a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .find {
@@ -99,7 +115,7 @@ h3 a {
 }
 
 .skills {
-  color: #666;
+  color: #888 !important;
   font-size: 75% !important;
   text-transform: uppercase;
 }
