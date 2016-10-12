@@ -130,3 +130,13 @@ img {
     padding: 5vw;
   }
 }
+
+.resources ul {
+  list-style: none;
+  text-align: left;
+}
+
+.resources li {
+  margin: 2em;
+  font-size: 110%;
+}
